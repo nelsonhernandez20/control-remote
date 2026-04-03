@@ -1,0 +1,8 @@
+<resources>
+    <style name="Theme.ControlRemote" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">@android:color/transparent</item>
+        <item name="android:navigationBarColor">#FF282828</item>
+        <item name="android:windowLightStatusBar">false</item>
+        <item name="android:windowBackground">#FF282828</item>
+    </style>
+</resources>

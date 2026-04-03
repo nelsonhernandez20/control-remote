@@ -1,0 +1,23 @@
+# Gradle
+.gradle/
+build/
+**/build/
+
+# Android Studio / IDEA
+.idea/
+*.iml
+.DS_Store
+
+# Local config (no subir claves locales)
+local.properties
+
+# Keystores (nunca subir firmas reales)
+*.jks
+*.keystore
+
+# Capturas / APK locales (opcional: descomenta si no quieres APK en el repo)
+# *.apk
+
+# NDK
+.externalNativeBuild/
+.cxx/
