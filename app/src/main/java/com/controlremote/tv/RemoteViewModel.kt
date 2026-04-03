@@ -350,7 +350,7 @@ class RemoteViewModel(
     fun setAndroidTvPin(value: String) {
         val filtered = value.filter { c ->
             c.isDigit() || c in 'a'..'f' || c in 'A'..'F'
-        }.take(6).lowercase()
+        }.take(6).uppercase()
         _uiState.update { it.copy(androidTvPin = filtered) }
     }
 
@@ -547,7 +547,7 @@ class RemoteViewModel(
                         credentials.getKeyPem(ip)!!
                     )
                     pairing?.close()
-                    val p = PairingSession(ip, ssl, "Control remoto TV")
+                    val p = PairingSession(ip, ssl, str(R.string.app_name))
                     pairing = p
                     p.connect()
                     p.startPairing()

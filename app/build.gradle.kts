@@ -19,6 +19,7 @@ android {
 
     buildTypes {
         release {
+            // Pon a true cuando tengas firma de release y hayas probado bien con anuncios.
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -26,6 +27,7 @@ android {
             )
         }
     }
+    // Firma: en local suele usarse signingConfigs + store en gradle.properties (no subir al repo).
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17

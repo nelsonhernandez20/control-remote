@@ -4,31 +4,24 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.controlremote.tv.R
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 
-/**
- * IDs de prueba oficiales AdMob (desarrollo). En producción, crea unidades por formato en AdMob.
- * Banner estándar (320×50 aprox.)
- */
-private const val AD_UNIT_BANNER = "ca-app-pub-3940256099942544/6300978111"
-
-/**
- * Rectángulo mediano 300×250 (MREC). Misma app de demo de Google; en producción usa una unidad MREC.
- */
-private const val AD_UNIT_MEDIUM_RECT = "ca-app-pub-3940256099942544/6300978111"
-
 @Composable
 fun AdsBanner(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val unitId = context.getString(R.string.admob_banner_unit_id)
     AdViewBanner(
         modifier = modifier
             .fillMaxWidth()
             .height(50.dp),
         adSize = AdSize.BANNER,
-        adUnitId = AD_UNIT_BANNER
+        adUnitId = unitId
     )
 }
 
@@ -37,12 +30,14 @@ fun AdsBanner(modifier: Modifier = Modifier) {
  */
 @Composable
 fun AdsMediumRectangle(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val unitId = context.getString(R.string.admob_medium_rect_unit_id)
     AdViewBanner(
         modifier = modifier
             .fillMaxWidth()
             .height(250.dp),
         adSize = AdSize.MEDIUM_RECTANGLE,
-        adUnitId = AD_UNIT_MEDIUM_RECT
+        adUnitId = unitId
     )
 }
 

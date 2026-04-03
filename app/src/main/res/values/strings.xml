@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">TV Remote</string>
-    <string name="subtitle_wifi_no_root">Wi‑Fi · No root</string>
+    <string name="app_name">TV Remote Control</string>
     <string name="tab_device">Device</string>
     <string name="tab_status">Status</string>
     <string name="tab_remote">Remote</string>
@@ -79,9 +78,9 @@
     <string name="cd_ch_up">Channel up</string>
     <string name="cd_ch_down">Channel down</string>
     <string name="label_ch">CH</string>
-    <string name="notification_channel_tv_remote_name">TV Remote</string>
+    <string name="notification_channel_tv_remote_name">TV Remote Control</string>
     <string name="notification_channel_tv_remote_desc">Active session with the TV (Android TV / Google TV)</string>
-    <string name="notification_tv_remote_title">TV Remote</string>
+    <string name="notification_tv_remote_title">TV Remote Control</string>
     <string name="notification_tv_remote_connecting">Connecting to %1$s…</string>
     <string name="notification_tv_remote_connected">Connected to %1$s</string>
     <string name="notification_tv_remote_disconnect">Disconnect</string>
@@ -121,4 +120,5 @@
     <string name="language_spanish">Spanish</string>
     <string name="language_french">French</string>
     <string name="language_portuguese">Portuguese</string>
+    <string name="legal_privacy">Privacy policy</string>
 </resources>

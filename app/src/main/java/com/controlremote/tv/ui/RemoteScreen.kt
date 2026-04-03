@@ -1,6 +1,8 @@
 package com.controlremote.tv.ui
 
+import android.content.Intent
 import android.Manifest
+import android.net.Uri
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
@@ -40,6 +42,7 @@ import androidx.compose.material3.PrimaryTabRow
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -102,17 +105,10 @@ fun RemoteScreen(
         topBar = {
             CenterAlignedTopAppBar(
                 title = {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            stringResource(R.string.app_name),
-                            style = MaterialTheme.typography.titleLarge
-                        )
-                        Text(
-                            stringResource(R.string.subtitle_wifi_no_root),
-                            style = MaterialTheme.typography.labelMedium,
-                            color = TextMuted
-                        )
-                    }
+                    Text(
+                        stringResource(R.string.app_name),
+                        style = MaterialTheme.typography.titleLarge
+                    )
                 },
                 actions = {
                     Box {
@@ -252,13 +248,28 @@ fun RemoteScreen(
                 }
             }
 
-            Box(
+            Column(
                 Modifier
                     .fillMaxWidth()
                     .navigationBarsPadding()
                     .background(BackgroundDark)
             ) {
                 AdsBanner()
+                TextButton(
+                    onClick = {
+                        val url = context.getString(R.string.privacy_policy_url)
+                        context.startActivity(
+                            Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        )
+                    },
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    Text(
+                        text = stringResource(R.string.legal_privacy),
+                        color = TextMuted,
+                        style = MaterialTheme.typography.labelSmall
+                    )
+                }
             }
         }
     }

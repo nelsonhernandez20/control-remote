@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Télécommande TV</string>
-    <string name="subtitle_wifi_no_root">Wi‑Fi · Sans root</string>
     <string name="tab_device">Appareil</string>
     <string name="tab_status">État</string>
     <string name="tab_remote">Télécommande</string>
@@ -121,4 +120,5 @@
     <string name="language_spanish">Espagnol</string>
     <string name="language_french">Français</string>
     <string name="language_portuguese">Portugais</string>
+    <string name="legal_privacy">Politique de confidentialité</string>
 </resources>

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!--
+      Play Store / producción: sustituye por los IDs de tu app en la consola AdMob.
+      Mientras tanto se usan los IDs de prueba oficiales de Google.
+    -->
+    <string name="admob_app_id" translatable="false">ca-app-pub-7903079477839043~5436774097</string>
+    <string name="admob_banner_unit_id" translatable="false">ca-app-pub-7903079477839043/2758639869</string>
+    <string name="admob_medium_rect_unit_id" translatable="false">ca-app-pub-7903079477839043/2009393920</string>
+    <!-- Publica tu política de privacidad y pon aquí la URL exacta (requerida con anuncios). -->
+    <string name="privacy_policy_url" translatable="false">https://nelsonhernandez20.github.io/control-remote/privacy-policy.html</string>
+</resources>
