@@ -35,8 +35,24 @@ class TvCredentialsStore(context: Context) {
         prefs.edit()
             .remove(certKey(host))
             .remove(keyKey(host))
+            .remove(displayKey(host))
             .apply()
     }
+
+    /** Hosts con certificado guardado (emparejados al menos una vez). */
+    fun listPairedHosts(): List<String> =
+        prefs.all.keys
+            .filter { it.startsWith("cert_") }
+            .map { it.removePrefix("cert_") }
+            .sorted()
+
+    fun setDisplayName(host: String, name: String) {
+        prefs.edit().putString(displayKey(host), name).apply()
+    }
+
+    fun getDisplayName(host: String): String? = prefs.getString(displayKey(host), null)
+
+    private fun displayKey(host: String) = "disp_$host"
 
     private fun certKey(host: String) = "cert_$host"
     private fun keyKey(host: String) = "key_$host"

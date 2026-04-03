@@ -1,5 +1,7 @@
 package com.controlremote.tv.androidtv
 
+import android.content.Context
+import com.controlremote.tv.R
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
@@ -36,8 +38,9 @@ object SamsungPortScanner {
         return null
     }
 
-    suspend fun scan(): List<DiscoveredTv> = withContext(Dispatchers.IO) {
+    suspend fun scan(context: Context): List<DiscoveredTv> = withContext(Dispatchers.IO) {
         val prefix = localSubnetPrefix() ?: return@withContext emptyList()
+        val app = context.applicationContext
         coroutineScope {
             val sem = Semaphore(PARALLEL)
             (1..254).map { last ->
@@ -46,7 +49,7 @@ object SamsungPortScanner {
                         val ip = "$prefix.$last"
                         if (portOpen(ip)) {
                             DiscoveredTv(
-                                name = "Samsung (HTTP) · $ip",
+                                name = app.getString(R.string.discovered_samsung_http, ip),
                                 host = ip,
                                 port = SAMSUNG_PORT,
                                 source = DiscoverySource.SAMSUNG_HTTP_SCAN

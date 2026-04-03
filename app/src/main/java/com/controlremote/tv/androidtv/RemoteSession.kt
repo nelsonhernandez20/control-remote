@@ -3,9 +3,7 @@ package com.controlremote.tv.androidtv
 import com.controlremote.androidtv.proto.RemoteConfigure
 import com.controlremote.androidtv.proto.RemoteDeviceInfo
 import com.controlremote.androidtv.proto.RemoteDirection
-import com.controlremote.androidtv.proto.RemoteEditInfo
 import com.controlremote.androidtv.proto.RemoteImeBatchEdit
-import com.controlremote.androidtv.proto.RemoteImeObject
 import com.controlremote.androidtv.proto.RemoteKeyCode
 import com.controlremote.androidtv.proto.RemoteKeyInject
 import com.controlremote.androidtv.proto.RemoteMessage
@@ -27,7 +25,9 @@ import kotlin.concurrent.thread
 class RemoteSession(
     private val host: String,
     private val sslContext: SSLContext,
-    enableIme: Boolean = true
+    enableIme: Boolean = true,
+    /** La TV envía marca/modelo en [RemoteConfigure.device_info] al negociar el control. */
+    private val onTvDeviceLabel: ((String) -> Unit)? = null
 ) {
     private val requestedFeatures: Int = run {
         var f = 1 or 2 or 32 or 64 or 512
@@ -83,6 +83,12 @@ class RemoteSession(
         when {
             msg.hasRemoteConfigure() -> {
                 val cfg = msg.remoteConfigure
+                if (cfg.hasDeviceInfo()) {
+                    val label = buildTvLabelFromDeviceInfo(cfg.deviceInfo)
+                    if (!label.isNullOrBlank()) {
+                        onTvDeviceLabel?.invoke(label)
+                    }
+                }
                 val merged = activeFeatures.get() and cfg.code1
                 activeFeatures.set(merged)
                 reply.setRemoteConfigure(
@@ -144,36 +150,6 @@ class RemoteSession(
         }
     }
 
-    /**
-     * Envía texto al campo enfocado (buscador, etc.) vía IME.
-     * Debe coincidir con [androidtvremote2](https://github.com/tronikos/androidtvremote2) / Remote v2.
-     */
-    fun sendImeText(text: String) {
-        val out = output ?: error("No conectado")
-        if (text.isEmpty()) return
-        val endIdx = (text.length - 1).coerceAtLeast(0)
-        val imeObject = RemoteImeObject.newBuilder()
-            .setStart(endIdx)
-            .setEnd(endIdx)
-            .setValue(text)
-            .build()
-        val editInfo = RemoteEditInfo.newBuilder()
-            .setInsert(1)
-            .setTextFieldStatus(imeObject)
-            .build()
-        val batch = RemoteImeBatchEdit.newBuilder()
-            .setImeCounter(imeCounter.get())
-            .setFieldCounter(fieldCounter.get())
-            .addEditInfo(editInfo)
-            .build()
-        val payload = RemoteMessage.newBuilder()
-            .setRemoteImeBatchEdit(batch)
-            .build()
-        synchronized(out) {
-            payload.writeDelimitedTo(out)
-        }
-    }
-
     fun close() {
         closed.set(true)
         try {
@@ -186,5 +162,16 @@ class RemoteSession(
 
     companion object {
         private const val REMOTE_PORT = 6466
+
+        private fun buildTvLabelFromDeviceInfo(di: RemoteDeviceInfo): String? {
+            val v = di.vendor.trim()
+            val m = di.model.trim()
+            return when {
+                v.isNotEmpty() && m.isNotEmpty() -> "$v $m"
+                m.isNotEmpty() -> m
+                v.isNotEmpty() -> v
+                else -> null
+            }
+        }
     }
 }

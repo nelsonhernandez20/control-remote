@@ -11,21 +11,53 @@ import com.google.android.gms.ads.AdSize
 import com.google.android.gms.ads.AdView
 
 /**
- * Banner inferior. En producción sustituye [AD_UNIT_ID] por tu unidad en AdMob.
- * IDs de prueba oficiales de Google (solo desarrollo).
+ * IDs de prueba oficiales AdMob (desarrollo). En producción, crea unidades por formato en AdMob.
+ * Banner estándar (320×50 aprox.)
  */
-private const val AD_UNIT_ID = "ca-app-pub-3940256099942544/6300978111"
+private const val AD_UNIT_BANNER = "ca-app-pub-3940256099942544/6300978111"
+
+/**
+ * Rectángulo mediano 300×250 (MREC). Misma app de demo de Google; en producción usa una unidad MREC.
+ */
+private const val AD_UNIT_MEDIUM_RECT = "ca-app-pub-3940256099942544/6300978111"
 
 @Composable
 fun AdsBanner(modifier: Modifier = Modifier) {
-    AndroidView(
+    AdViewBanner(
         modifier = modifier
             .fillMaxWidth()
             .height(50.dp),
+        adSize = AdSize.BANNER,
+        adUnitId = AD_UNIT_BANNER
+    )
+}
+
+/**
+ * Rectángulo mediano para incrustar en tarjetas (p. ej. pestaña Estado).
+ */
+@Composable
+fun AdsMediumRectangle(modifier: Modifier = Modifier) {
+    AdViewBanner(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(250.dp),
+        adSize = AdSize.MEDIUM_RECTANGLE,
+        adUnitId = AD_UNIT_MEDIUM_RECT
+    )
+}
+
+@Composable
+private fun AdViewBanner(
+    modifier: Modifier,
+    adSize: AdSize,
+    adUnitId: String
+) {
+    AndroidView(
+        modifier = modifier,
         factory = { context ->
             AdView(context).apply {
-                setAdSize(AdSize.BANNER)
-                adUnitId = AD_UNIT_ID
+                setAdSize(adSize)
+                this.adUnitId = adUnitId
                 loadAd(AdRequest.Builder().build())
             }
         }

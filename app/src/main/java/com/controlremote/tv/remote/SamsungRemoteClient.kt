@@ -85,5 +85,7 @@ enum class SamsungKey(val code: String) {
     CH_DOWN("KEY_CHDOWN"),
     PLAY("KEY_PLAY"),
     PAUSE("KEY_PAUSE"),
-    SOURCE("KEY_HDMI")
+    SOURCE("KEY_HDMI"),
+    /** Búsqueda / asistente de voz en muchos modelos */
+    SEARCH("KEY_SEARCH")
 }
