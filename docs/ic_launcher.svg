@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  TV Remote Control  estilo suave: anillo gris, botn central redondo, 4 puntos en el anillo (sin flechas).
+  Android: res/drawable/ic_launcher.xml
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 108 108" width="512" height="512">
+  <rect width="108" height="108" rx="24" fill="#000000"/>
+  <!-- Anillo gris claro (trazo grueso, sin puntas) -->
+  <circle cx="54" cy="54" r="35" fill="none" stroke="#E8E8EC" stroke-width="18"/>
+  <!-- Boton central (un poco mas pequeno) -->
+  <circle cx="54" cy="54" r="15" fill="#B794F6" stroke="#8B45FF" stroke-width="2.5"/>
+  <!-- Cuatro puntos en el anillo (arriba, derecha, abajo, izquierda) -->
+  <circle cx="54" cy="19" r="3.2" fill="#D4C8FC"/>
+  <circle cx="89" cy="54" r="3.2" fill="#D4C8FC"/>
+  <circle cx="54" cy="89" r="3.2" fill="#D4C8FC"/>
+  <circle cx="19" cy="54" r="3.2" fill="#D4C8FC"/>
+</svg>
