@@ -1,8 +1,17 @@
+import java.util.Properties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
     id("com.google.protobuf")
+}
+
+val keystorePropertiesFile = rootProject.file("keystore.properties")
+val keystoreProperties = Properties().apply {
+    if (keystorePropertiesFile.exists()) {
+        keystorePropertiesFile.inputStream().use { load(it) }
+    }
 }
 
 android {
@@ -17,17 +26,30 @@ android {
         versionName = "1.0"
     }
 
+    signingConfigs {
+        if (keystorePropertiesFile.exists()) {
+            create("release") {
+                keyAlias = keystoreProperties.getProperty("keyAlias") ?: error("keyAlias en keystore.properties")
+                keyPassword = keystoreProperties.getProperty("keyPassword") ?: error("keyPassword en keystore.properties")
+                storePassword = keystoreProperties.getProperty("storePassword") ?: error("storePassword en keystore.properties")
+                val storePath = keystoreProperties.getProperty("storeFile") ?: error("storeFile en keystore.properties")
+                storeFile = rootProject.file(storePath)
+            }
+        }
+    }
+
     buildTypes {
         release {
-            // Pon a true cuando tengas firma de release y hayas probado bien con anuncios.
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
+            if (keystorePropertiesFile.exists()) {
+                signingConfig = signingConfigs.getByName("release")
+            }
         }
     }
-    // Firma: en local suele usarse signingConfigs + store en gradle.properties (no subir al repo).
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
